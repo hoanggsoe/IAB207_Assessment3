@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Event Details – Musical Sound Events</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="static/style/style.css" />
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container">
+    <a class="navbar-brand" href="index.html">Musical Sound Events</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link active" href="event.html">Event Details</a></li>
+        <li class="nav-item"><a class="nav-link" href="create.html">Create Event</a></li>
+        <li class="nav-item"><a class="nav-link" href="history.html">Booking History</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Event Header -->
+<section class="container my-5">
+  <div class="row">
+    <div class="col-md-6">
+      <img src="static/img/jazz-night.jpg" class="img-fluid rounded" alt="Jazz Night Live" />
+    </div>
+    <div class="col-md-6">
+      <h2>Jazz Night Live</h2>
+      <p><strong>Date:</strong> May 10, 2025</p>
+      <p><strong>Time:</strong> 7:00 PM – 10:00 PM</p>
+      <p><strong>Venue:</strong> Brisbane Music Hall</p>
+      <p><strong>Price:</strong> $35 per ticket</p>
+      <p><strong>Tickets Available:</strong> 18</p>
+      <p><strong>Status:</strong> <span class="badge bg-success">Open</span></p>
+      <p>Join us at the Brisbane Music Hall in Kangaroo Point for a smooth night of live jazz, featuring talented local musicians and special guest ensembles. Set along the Brisbane River, this iconic venue offers stunning skyline views, a laid-back atmosphere, and licensed dining. Whether you're a long-time jazz lover or a first-time guest, this event promises a rich musical experience in one of the city's most unique settings.</p>
+
+      <!-- Booking Form -->
+      <form class="mt-4">
+        <div class="mb-3">
+          <label for="ticketQuantity" class="form-label">Number of Tickets</label>
+          <select class="form-select" id="ticketQuantity" required>
+            <option selected disabled value="">Choose...</option>
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+          </select>
+        </div>
+        <p class="text-muted">* Total price will be shown on confirmation screen.</p>
+        <button type="submit" class="btn btn-primary">Book Now</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- Comments Section -->
+<section class="container my-5">
+  <h4 class="mb-3">User Comments</h4>
+
+  <!-- Existing Comments -->
+  <div class="mb-4">
+    <div class="border p-3 rounded mb-2">
+      <strong>Sam:</strong> Amazing vibes last year! Can’t wait for this one.
+      <div class="text-muted small">Posted on March 5, 2025</div>
+    </div>
+    <div class="border p-3 rounded">
+      <strong>Asha:</strong> Hope they bring the sax player again!
+      <div class="text-muted small">Posted on March 6, 2025</div>
+    </div>
+  </div>
+
+  <!-- Post Comment Form -->
+  <h5>Leave a Comment</h5>
+  <form>
+    <div class="mb-3">
+      <label for="nameInput" class="form-label">Your Name</label>
+      <input type="text" class="form-control" id="nameInput" required>
+    </div>
+    <div class="mb-3">
+      <label for="commentInput" class="form-label">Your Comment</label>
+      <textarea class="form-control" id="commentInput" rows="3" required></textarea>
+    </div>
+    <button type="submit" class="btn btn-outline-secondary">Post Comment</button>
+  </form>
+</section>
+
+<!-- Bootstrap Bundle JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
