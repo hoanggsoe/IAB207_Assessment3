@@ -23,15 +23,15 @@
       </div>
 
       <div class="card p-4 shadow-sm">
-        <form>
+        <form action="{{ url_for('auth.login') }}" method="POST">
           <div class="mb-3">
             <label for="login-email" class="form-label">Email address</label>
-            <input type="email" class="form-control" id="login-email" placeholder="Enter your email">
+            <input type="email" class="form-control" id="login-email" name="email" placeholder="Enter your email">
           </div>
 
           <div class="mb-3">
             <label for="login-password" class="form-label">Password</label>
-            <input type="password" class="form-control" id="login-password" placeholder="Enter your password">
+            <input type="password" class="form-control" id="login-password" name="password" placeholder="Enter your password">
           </div>
 
           <div class="d-grid">
@@ -41,7 +41,7 @@
       </div>
 
       <div class="text-center mt-3">
-        <p>New user? <a href="register.html">Click here</a> to register.</p>
+        <p>New user? <a href="{{ url_for('auth.register') }}">Click here</a> to register.</p>
       </div>
     </div>
   </div>
