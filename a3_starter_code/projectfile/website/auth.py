@@ -27,7 +27,7 @@ def register():
         flash('Registration successful. You can now log in.', 'success')
         return redirect(url_for('auth.login'))
 
-    return render_template('user.html', form=register_form, heading='Register')
+    return render_template('register.html', form=register_form, heading='Register')
 
 # Login route
 @auth_bp.route('/login', methods=['GET', 'POST'])
@@ -45,7 +45,6 @@ def login():
         if error is None:
             login_user(user)
             nextp = request.args.get('next')  
-            print(nextp)
             if nextp is None or not nextp.startswith('/'):
                 return redirect(url_for('index'))
             return redirect(nextp)
@@ -53,9 +52,17 @@ def login():
             flash(error)
     return render_template('login.html', form=login_form, heading='Login')
 
-# Test form
-@app.route('/test-form', methods=['POST'])
+# Logout route
+@auth_bp.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    flash('You have been logged out.', 'info')
+    return redirect(url_for('auth.login'))
+
+# Test form submission
+@auth_bp.route('/test-form', methods=['POST'])
 def test_form():
     email = request.form.get('email')
     password = request.form.get('password')
-    return f"Received: {email}, {password}"
+    return f"Received: Email: {email}, Password: {password}"
