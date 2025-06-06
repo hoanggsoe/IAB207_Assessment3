@@ -8,35 +8,47 @@ from . import db
 # Create a blueprint - make sure all BPs have unique names
 auth_bp = Blueprint('auth', __name__)
 
-# This is a hint for a login function
+# Registration route
+@auth_bp.route('/register', methods=['GET', 'POST'])
+def register():
+    register_form = RegisterForm()
+    if register_form.validate_on_submit():
+        user_name = register_form.user_name.data
+        email = register_form.email.data
+        password = register_form.password.data
+
+        # Hash password
+        hashed_password = generate_password_hash(password).decode('utf-8')
+
+        # Save user with the hashed password
+        new_user = User(name=user_name, email=email, password_hash=hashed_password)
+        db.session.add(new_user)
+        db.session.commit()
+        flash('Registration successful. You can now log in.', 'success')
+        return redirect(url_for('auth.login'))
+
+    return render_template('user.html', form=register_form, heading='Register')
+
+# Login route
 @auth_bp.route('/login', methods=['GET', 'POST'])
 def login():
-    """Handles user login"""
     login_form = LoginForm()
     error = None
-
     if login_form.validate_on_submit():
         user_name = login_form.user_name.data
         password = login_form.password.data
         user = db.session.scalar(db.select(User).where(User.name == user_name))
-        
         if user is None:
             error = 'Incorrect user name'
-        elif not check_password_hash(user.password_hash, password):  # Takes the hash and cleartext password
+        elif not check_password_hash(user.password_hash, password):  # Hashed password
             error = 'Incorrect password'
-
         if error is None:
-            # Log in the user
             login_user(user)
-            
-            # Determine where to redirect
-            nextp = request.args.get('next')
+            nextp = request.args.get('next')  
+            print(nextp)
             if nextp is None or not nextp.startswith('/'):
-                nextp = url_for('index')  # Default to 'index' if 'next' is invalid
+                return redirect(url_for('index'))
             return redirect(nextp)
         else:
-            # Flash the error message
             flash(error)
-
-    # Render the login form
     return render_template('login.html', form=login_form, heading='Login')
