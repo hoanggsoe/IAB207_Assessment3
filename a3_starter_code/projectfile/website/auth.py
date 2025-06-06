@@ -52,3 +52,10 @@ def login():
         else:
             flash(error)
     return render_template('login.html', form=login_form, heading='Login')
+
+# Test form
+@app.route('/test-form', methods=['POST'])
+def test_form():
+    email = request.form.get('email')
+    password = request.form.get('password')
+    return f"Received: {email}, {password}"
