@@ -8,27 +8,35 @@ from . import db
 # Create a blueprint - make sure all BPs have unique names
 auth_bp = Blueprint('auth', __name__)
 
-# this is a hint for a login function
+# This is a hint for a login function
 @auth_bp.route('/login', methods=['GET', 'POST'])
-# view function
 def login():
+    """Handles user login"""
     login_form = LoginForm()
     error = None
+
     if login_form.validate_on_submit():
         user_name = login_form.user_name.data
         password = login_form.password.data
-        user = db.session.scalar(db.select(User).where(User.name==user_name))
+        user = db.session.scalar(db.select(User).where(User.name == user_name))
+        
         if user is None:
             error = 'Incorrect user name'
-        elif not check_password_hash(user.password_hash, password): # takes the hash and cleartext password
+        elif not check_password_hash(user.password_hash, password):  # Takes the hash and cleartext password
             error = 'Incorrect password'
+
         if error is None:
+            # Log in the user
             login_user(user)
-            nextp = request.args.get('next') # this gives the url from where the login page was accessed
-            print(nextp)
-            if next is None or not nextp.startswith('/'):
-                return redirect(url_for('index'))
+            
+            # Determine where to redirect
+            nextp = request.args.get('next')
+            if nextp is None or not nextp.startswith('/'):
+                nextp = url_for('index')  # Default to 'index' if 'next' is invalid
             return redirect(nextp)
         else:
+            # Flash the error message
             flash(error)
-    return render_template('user.html', form=login_form, heading='Login')
+
+    # Render the login form
+    return render_template('login.html', form=login_form, heading='Login')
