@@ -2,6 +2,7 @@ from . import db
 from datetime import datetime
 from flask_login import UserMixin
 
+#stores user data
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String(100), nullable=False)
@@ -15,7 +16,7 @@ class User(db.Model, UserMixin):
     comments = db.relationship('Comment', backref='user')
     orders = db.relationship('Order', backref='user')
     events = db.relationship('Event', backref='creator')
-
+# model representing an event
 class Event(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(150), nullable=False)
@@ -33,6 +34,7 @@ class Event(db.Model):
     comments = db.relationship('Comment', backref='event', cascade='all, delete-orphan')
     orders = db.relationship('Order', backref='event')
 
+# model representing a comment on an event
 class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.Text, nullable=False)
@@ -40,6 +42,7 @@ class Comment(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     event_id = db.Column(db.Integer, db.ForeignKey('event.id'), nullable=False)
 
+# model representing an order for tickets
 class Order(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     quantity = db.Column(db.Integer, nullable=False)
