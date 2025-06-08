@@ -13,15 +13,27 @@ auth_bp = Blueprint('auth', __name__)
 def register():
     register_form = RegisterForm()
     if register_form.validate_on_submit():
+        first_name = register_form.first_name.data
+        surname = register_form.surname.data
         user_name = register_form.user_name.data
         email = register_form.email.data
+        contact_number = register_form.contact_number.data
+        street_address = register_form.street_address.data
         password = register_form.password.data
 
         # Hash password
         hashed_password = generate_password_hash(password).decode('utf-8')
 
         # Save user with the hashed password
-        new_user = User(name=user_name, email=email, password_hash=hashed_password)
+        new_user = User(
+            first_name=first_name,
+            surname=surname,
+            name=user_name, 
+            email=email,
+            contact_number=contact_number,
+            street_address=street_address,
+            password_hash=hashed_password
+        )
         db.session.add(new_user)
         db.session.commit()
         flash('Registration successful. You can now log in.', 'success')
@@ -46,7 +58,7 @@ def login():
             login_user(user)
             nextp = request.args.get('next')  
             if nextp is None or not nextp.startswith('/'):
-                return redirect(url_for('index'))
+                return redirect(url_for('main.index'))
             return redirect(nextp)
         else:
             flash(error)
@@ -58,7 +70,7 @@ def login():
 def logout():
     logout_user()
     flash('You have been logged out.', 'info')
-    return redirect(url_for('auth.login'))
+    return redirect(url_for('main.index'))
 
 # Test form submission
 @auth_bp.route('/test-form', methods=['POST'])
