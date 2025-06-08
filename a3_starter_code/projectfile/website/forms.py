@@ -25,10 +25,10 @@ class RegisterForm(FlaskForm):
     # submit button
     submit = SubmitField("Register")
 
-    class EventForm(FlaskForm):
+class EventForm(FlaskForm):
     name = StringField("Event Name", validators=[DataRequired()])
     description = TextAreaField("Description", validators=[DataRequired()])
-    date = DateTimeField("Event Date", validators=[DataRequired()], format='%Y-%m-%d %H:%M')
+    date = DateTimeField("Event Date", validators=[DataRequired()], format='%Y-%m-%dT%H:%M')
     venue = StringField("Venue", validators=[DataRequired()])
     category = SelectField("Category", choices=[
         ('Jazz', 'Jazz'),
